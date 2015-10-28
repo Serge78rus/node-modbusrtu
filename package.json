@@ -1,0 +1,24 @@
+{
+  "name": "modbusrtu",
+  "version": "0.0.1",
+  "description": "NodeJS module to communicate with devices, that support the Modbus RTU protocol.",
+  "main": "stub.js",
+  "scripts": {
+    "test": "test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Serge78rus/node-modbusrtu.git"
+  },
+  "keywords": [
+    "modbus",
+    "communication",
+    "scada",
+    "automation"
+  ],
+  "author": "Serge L. Ryadkow",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Serge78rus/node-modbusrtu/issues"
+  }
+}
