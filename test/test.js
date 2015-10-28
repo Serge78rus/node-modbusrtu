@@ -2,7 +2,7 @@
  * http://usejsdoc.org/
  */
 
-var Modbus = require("modbus").Modbus;
+var Modbus = require("../lib/modbus").Modbus;
 
 modbus = new Modbus("/dev/ttyUSB0", {}, function(err) {
 	if (!err) {
