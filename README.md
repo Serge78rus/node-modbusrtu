@@ -8,7 +8,8 @@ This project on the early development stage, and now supported only GNU/Linux en
 
 # Installing
 
-[![(npm package version)](https://nodei.co/npm/modbusrtu.png?downloads=true&downloadRank=true)](https://npmjs.org/package/modbusrtu) [![(a histogram of downloads)](https://nodei.co/npm-dl/modbusrtu.png?months=3&height=3)](https://npmjs.org/package/modbusrtu)
+[![NPM](https://nodei.co/npm/modbusrtu.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/modbusrtu/)
+[![NPM](https://nodei.co/npm-dl/modbusrtu.png?months=3&height=3)](https://nodei.co/npm/modbusrtu/)
 
 * Latest packaged version: `npm install modbusrtu`
 
