@@ -4,9 +4,9 @@ The `modbusrtu` package is Node.js module to communicate with devices, that supp
 
 It requires [Node.js](http://nodejs.org/) to run and [npm](https://www.npmjs.org/) to be installed.
 
-This project on the early development stage.
+This project on the early development stage, and now supported only GNU/Linux environment and Modbus functions 1...4  
 
-## Installing
+# Installing
 
 [![(npm package version)](https://nodei.co/npm/modbusrtu.png?downloads=true&downloadRank=true)](https://npmjs.org/package/modbusrtu) [![(a histogram of downloads)](https://nodei.co/npm-dl/modbusrtu.png?months=3&height=3)](https://npmjs.org/package/modbusrtu)
 
@@ -14,11 +14,12 @@ This project on the early development stage.
 
 * Latest version on GitHub: `npm install https://github.com/Serge78rus/node-modbusrtu/tarball/master`
 
-## Usage
+# Usage
 
 Example of usage in `test.js`
 ```javascript
-var Modbus = require("../lib/modbus").Modbus;
+//var Modbus = require("../lib/modbus").Modbus; //relative path from test directory 
+var Modbus = require("modbus").Modbus; //if module installed to default location
 
 var modbus = new Modbus("/dev/ttyUSB0", {}, function(err) {
 	if (!err) {
@@ -79,7 +80,89 @@ function testFn4(done) {
 	});
 }
 ```
+# API
 
-## License
+## Modbus(dev, opt, done)
+
+Constructor of modbus object
+* `dev` - communication device name (for example: /dev/ttyUSB0)
+* `opt` - communication options
+* `done` - callback function
+ 
+Object `opt` may contain some of the following fields:
+```javascript
+{
+	baud: 9600, //communication speed
+	fmt: "8n2", //data bits, parity and stop bits
+	timeout: 1000, //response timeout
+	pause: 200, //pause between response and next request
+	retry: 3 //retry counts
+}
+```
+If some fields are omitted, they take default values as described above
+
+Function `done` take one argument: 
+```javascript
+done(err)
+```
+where `err` is `null` if success or Error object if an error occurred
+
+## readCoils(slave, addr, cnt, done)
+
+Function for reading coils (Modbus function 1)
+* `slave` - slave device Id
+* `addr` - first coil address
+* `cnt` - number of coils to read
+* `done` - callback function
+
+Function `done` take two argument: 
+```javascript
+done(err, data)
+```
+where `err` is `null` if success or Error object if an error occurred, `data` - array of boolean values of results
+
+## readDiscrInp(slave, addr, cnt, done)
+
+Function for reading discrete inputs (Modbus function 2)
+* `slave` - slave device Id
+* `addr` - first input address
+* `cnt` - number of inputs to read
+* `done` - callback function
+
+Function `done` take two argument: 
+```javascript
+done(err, data)
+```
+where `err` is `null` if success or Error object if an error occurred, `data` - array of boolean values of results
+
+## readHoldReg(slave, addr, cnt, done)
+
+Function for reading holding registers (Modbus function 3)
+* `slave` - slave device Id
+* `addr` - first register address
+* `cnt` - number of registers to read
+* `done` - callback function
+
+Function `done` take two argument: 
+```javascript
+done(err, data)
+```
+where `err` is `null` if success or Error object if an error occurred, `data` - array of unsigned integer values of results
+
+## readInpReg(slave, addr, cnt, done)
+
+Function for reading input registers (Modbus function 4)
+* `slave` - slave device Id
+* `addr` - first register address
+* `cnt` - number of registers to read
+* `done` - callback function
+
+Function `done` take two argument: 
+```javascript
+done(err, data)
+```
+where `err` is `null` if success or Error object if an error occurred, `data` - array of unsigned integer values of results
+
+# License
 
 MIT license (see the `LICENSE` file).
