@@ -28,6 +28,7 @@ node_modules
 
 # Eclipse project
 .project
+.settings
 
 # Testing directory
 test
