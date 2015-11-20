@@ -49,7 +49,7 @@ modbus.readCoils(
 		0, //first coil address
 		10, //number of coils to read 
 		function(err, data) {
-	if (!err) {
+  if (!err) {
   	/* Code for using boolean array "data", contains coils status */
   } else {
     console.error("readCoils() error: " + err);
