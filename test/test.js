@@ -4,62 +4,49 @@
 
 var Modbus = require("../lib/modbus").Modbus;
 
-var modbus = new Modbus("/dev/ttyUSB0", {}, function(err) {
+var tests = [
+  {func: "readCoils",     pars: [1, 0, 10]},
+  {func: "readDiscrInps", pars: [1, 0, 10]},
+  {func: "readHoldRegs",  pars: [1, 0, 10]},
+  {func: "readInpRegs",   pars: [1, 0, 10]},
+  {func: "writeCoil",     pars: [1, 0, true]},
+  {func: "readCoils",     pars: [1, 0, 1]},
+  {func: "writeCoil",     pars: [1, 0, false]},
+  {func: "readCoils",     pars: [1, 0, 1]},
+  {func: "writeReg",      pars: [1, 0, 123]},
+  {func: "readHoldRegs",  pars: [1, 0, 1]},
+  {func: "writeReg",      pars: [1, 0, 321]},
+  {func: "readHoldRegs",  pars: [1, 0, 1]},
+  {func: "writeCoils",    pars: [1, 0, [true, false, true, false, true, false, true, false, true, false]]},
+  {func: "readCoils",     pars: [1, 0, 10]},
+  {func: "writeCoils",    pars: [1, 0, [false, true, false, true, false, true, false, true, false, true]]},
+  {func: "readCoils",     pars: [1, 0, 10]},
+  {func: "writeRegs",     pars: [1, 0, [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]]},
+  {func: "readHoldRegs",  pars: [1, 0, 10]},
+  {func: "writeRegs",     pars: [1, 0, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]},
+  {func: "readHoldRegs",  pars: [1, 0, 10]}
+];
+
+var modbus = new Modbus("/dev/ttyUSB1", {}, function(err) {
 	if (!err) {
-		testFn1(function(err) {
-			testFn2(function(err) {
-				testFn3(function(err) {
-					testFn4(function(err) {
-						console.log("End tests");
-					});
-				});
-			});
-		});
+		(function test(i) {
+			if (tests[i]) {
+				var f = "function: " + tests[i].func + 
+						"() pars: " + tests[i].pars + 
+						" \tresult: "; 
+				modbus[tests[i].func].apply(modbus, 
+						tests[i].pars.concat(function(err, data) {
+					if (!err)
+						console.log(f + "OK" + (data ? ", data: " + data : ""));
+					else 
+						console.log(f + err);
+					test(++i);
+				}));
+			} else
+				console.log("end tests");
+		})(0);
 	} else
 		console.error("Modbus constructor error: " + err);
 });
 
-function testFn1(done) {
-	modbus.readCoils(1, 0, 1, function(err, data) {
-		if (!err) {
-			console.log("readCoils() ok, data: [" + data + "]");
-		} else {
-			console.error("readCoils() error: " + err);
-		}
-		done(err);
-	});
-}
-
-function testFn2(done) {
-	modbus.readDiscrInp(1, 0, 16, function(err, data) {
-		if (!err) {
-			console.log("readDiscrInp() ok, data: [" + data + "]");
-		} else {
-			console.error("readDiscrInp() error: " + err);
-		}
-		done(err);
-	});
-}
-
-function testFn3(done) {
-	modbus.readHoldReg(1, 0, 3, function(err, data) {
-		if (!err) {
-			console.log("readHoldReg() ok, data: [" + data + "]");
-		} else {
-			console.error("readHoldReg() error: " + err);
-		}
-		done(err);
-	});
-}
-
-function testFn4(done) {
-	modbus.readInpReg(1, 0, 13, function(err, data) {
-		if (!err) {
-			console.log("readInpReg() ok, data: [" + data + "]");
-		} else {
-			console.error("readInpReg() error: " + err);
-		}
-		done(err);
-	});
-}
 

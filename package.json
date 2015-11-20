@@ -1,6 +1,6 @@
 {
   "name": "modbusrtu",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "NodeJS module to communicate with devices, that support the Modbus RTU protocol.",
   "main": "./lib/modbus.js",
   "scripts": {
